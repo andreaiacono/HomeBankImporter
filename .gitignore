@@ -1,0 +1,7 @@
+.idea
+out
+*.iml
+.gradle
+build
+src/main/resources/importer.properties
+src/main/resources/firefox_profile

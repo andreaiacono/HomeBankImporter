@@ -1,0 +1,83 @@
+Abbigliamento
+Altro
+Amsterdam
+	Casa(AMS): ZEILSTRA[Affitto Casa Lepelstraat 1]; HEMA[Hema]; Blokker[Blokker]; Gamma[Gamma]; WATERNET[Bolletta acqua - Waternet]; Kruidvat; EnergieFlex[Gas/Elettricità]
+	Cibo(AMS): Albert Heijn[Spesa - Albert Heijn]; AH to go[Spesa - Albert Heijn]; AH togo[Spesa - Albert Heijn]; Spar van Kempen[Spesa - Spar]; AH Station[Spesina - Albert Heijn]; Ekoplaza[Spesa - Ekoplaza]; MYCHEF; HMSHOST AMSTERDAM SCHI; Vermaat FD Amsterdam; SHOP 2441/ SBF L4 SCHIPH[Spuntino - Schiphol]; Marqt[Spesa - Marqt]; Broodzaak[Panetteria]; ODIN[Spesa - Odin]
+	Servizi(AMS): Besured[Assicurazione sanitaria|4]; EasyPay S[Costo PinCard ABN Amro|4]; MAANDPREMIE[Assicurazione danni a terzi|4]; Gemeente Amsterdam[Comune di Amsterdam|4]; Hoogheemraadschap Amstel[Depurazione Acqua|4]
+	Trasporti(AMS): NS-[Treno]; GVB [Metro/Bus];Malpensa; NS Schiphol[Treno - Schiphol]; NS-Amsterdam[Treno]; NS-A'dam[Treno]; MILANO NORD CADORNA[Malpensa Express]; NS-Schiphol[Treno]
+    Voli(AMS): Easyjet
+Bianca
+Casa
+	Arredamento
+	Giardinaggio
+	Manutenzione: TOMMY SERVICE
+	Mutuo
+	Spese Condominiali
+	Utenze
+	Via E. de Amicis
+	Via Solari 15
+Computer
+	Hardware
+	Internet
+	Software
+Cultura
+	Fumetti: REM S R L[Supergulp]
+	Libri
+	Mostre: Banksy
+	Musei: Museum; Museo; Acquario; Stg. Projecten NKerk
+	Quotidiani: Repubblica; corriere
+	Riviste
+	Teatro
+	Universita'
+Disegno
+Entrate
+	Guadagni P.IVA: MANAGEMENT PRECISION[Stipendio eBay]; MARKTPLAATS[Stipendio eBay]
+	Investimenti
+	Resi
+	Rimborsi
+Fotografia
+Intrattenimento
+	Cinema
+	Discoteca
+	DVD
+	Uscite: MILLINO; Cafe; waterkant[Birrette - Waterkant]
+Mangiare
+	Cibo: BAKERY; VENCHI[Gelato - Venchi]
+	Ristoranti: Bazar; RIST.ACERO; FAMILY STEFANOS; L'ARAGOSTA DI ARCAINI; Maxi Steaks; PIZZA BIG
+	Spesa: PAM PANORAMA[Spesa - PAM]; SUPERMERCATO; BIO C BON[Spesa - Bio'c'bon]; PUNTO SMA[Spesa - Punto SMA]; Jumbo[Spesa - Jumbo]
+Musica
+	CD
+	Chitarra
+Partita IVA
+Regali
+Salute: Farmacia
+	Andrologo
+	Dentista
+	Medico
+	Ottico
+Sport: DECATHLON[Decathlon]
+	Arrampicata: Bouldermuur[Ingresso Het Lab]; BOULDERGYM[Ingresso Monk]
+	Corsa
+	KungFu
+	Nuoto
+	Piscina
+	Taekwondo
+Telefono
+	Cellulare
+	Fisso
+Trasporti: Taxi
+	ATM: AZIENDA TRASPORTI MI
+	Benzina
+	Bici
+	CBR
+	Monster
+	Moto
+	Noleggio Auto
+	NSR
+	Treno
+	Viaggi
+	VTR
+Viaggi
+Vizi
+	Gioco
+	Tabacco

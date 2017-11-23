@@ -1,0 +1,12 @@
+# system info
+downloadDirectory=/home/andrea/Downloads
+webdriver.gecko.driver=geckodriver
+
+# account info
+accountNumber=0000000000
+cardNumber=000
+identificationCode=00000
+
+# credit card
+cc_username=foo
+cc_password=bar
