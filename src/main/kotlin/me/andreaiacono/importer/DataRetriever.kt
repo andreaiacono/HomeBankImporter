@@ -87,17 +87,19 @@ class DataRetriever {
                day = "0" + day
             }
             var month = value.text.substring(value.text.indexOf(" ") + 1).dropLast(1).capitalize()
-            val date = LocalDate.parse(day + " " + month + " " + LocalDateTime.now().year, websiteDateFormatter)
-            var amount = amounts[index].text.substring( amounts[index].text.indexOf(" ")+1)
+            val date = LocalDate.parse(day + " " + month + " " + LocalDateTime.now().year, websiteDateFormatter).format(tabFormatter)
+            var amount = "-" + amounts[index].text.substring( amounts[index].text.indexOf(" ")+1)
             amount = amount.replace(".", "")
             amount = amount.replace(",", ".")
-            sb.append(listOf<String>("", "", date.format(tabFormatter), "0", "0", date.format(tabFormatter), amount, descriptions[index].text.padStart(33, ' ')).joinToString("\t")).append("\n")
+            sb.append(listOf<String>(date, "EUR", date, "0", "0", date, amount, "-".repeat(33) + descriptions[index].text).joinToString("\t", "")).append("\n")
         }
-
+        driver.findElementByXPath("//button[@class='page-header__menu-personal-btn js-mobilemenubtn-personal']").click()
+        driver.findElementByLinkText("Uitloggen").click()
+        sleep(1000)
         driver.close()
 
-        println(sb.toString())
-        return sb.toString()
+        println("CREDIT CARD: \n$sb")
+        return sb.toString().trim()
     }
 
     fun getLastBankTransactions(): String {
@@ -123,12 +125,13 @@ class DataRetriever {
         waitForElement("//span[ text() = 'account options']", driver).click()
         waitForElement("//li[ text() = 'Download transactions']", driver).click()
         waitForElement("//select[@id='mutationsDownloadSelectionCriteriaDTO.fileFormat']/option[text()='TXT']", driver).click()
+
+        // downloads data file
         waitForElement("//span[ text() = 'ok']", driver).click()
 
         // logouts from the site
-        sleep(3000)
+        sleep(2000)
         driver.findElementByLinkText("Log off").click()
-        driver.close()
 
         // loads downloaded file from filesystem (the last one with the specified extension)
         val dataFile = File(properties[DOWNLOAD_DIRECTORY_KEY])
@@ -138,9 +141,12 @@ class DataRetriever {
                 .firstOrNull() ?: throw Exception("No data file [*.$dataFileExtension] found in [${properties[DOWNLOAD_DIRECTORY_KEY]}")
 
         // returns the downloaded file
-        return dataFile
+        val content = dataFile
                 .readLines()
                 .joinToString("\n")
+
+        println("BANK:\n$content")
+        return content
     }
 
     fun waitForElement(path: String, driver: RemoteWebDriver): WebElement {

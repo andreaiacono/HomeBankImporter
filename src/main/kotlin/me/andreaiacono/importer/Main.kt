@@ -4,29 +4,39 @@ import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-const val INPUT_FILE = "src/main/resources/input_data.tab"
 const val OUTPUT_FILE = "src/main/resources/output_data.csv"
 
 val dateFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")!!
-val defaultPayment = 6
+val DEBIT_CARD_PAYMENT = 6
+val CREDIT_CARD_PAYMENT = 1
 
 
 fun main(args: Array<String>) {
 
+    val stringBuilder = StringBuilder()
     val dataRetriever = DataRetriever()
-    // writes the last transactions downloaded from the bank on disk
-//    File(INPUT_FILE).writeText(dataRetriever.getLastBankTransactions())
-    File(INPUT_FILE).writeText(dataRetriever.getLastCreditCardTransactions())
-
     val categories = loadCategories()
 
-    // writes an output files based on reading the input file and transforming every row into CSV format
-    File(OUTPUT_FILE).writeText(
-            File(INPUT_FILE)
-                    .readLines()
-                    .map { transformCsv(Transaction(it.split("\t"), categories)) }
+    // retrieves the data from the bank account
+    val bankAccountData = dataRetriever.getLastBankTransactions()
+    stringBuilder.append(
+            bankAccountData
+                    .split("\n")
+                    .map { transformCsv(Transaction(it.split("\t"), categories, DEBIT_CARD_PAYMENT)) }
                     .joinToString("\n")
     )
+
+    // retrieves the data from the credit card
+    val creditCardData = dataRetriever.getLastCreditCardTransactions()
+    stringBuilder.append(
+            creditCardData
+                    .split("\n")
+                    .map { transformCsv(Transaction(it.split("\t"), categories, CREDIT_CARD_PAYMENT)) }
+                    .joinToString("\n")
+    )
+
+    // writes on disk all the last transactions
+    File(OUTPUT_FILE).writeText(stringBuilder.toString())
 }
 
 
@@ -58,7 +68,7 @@ fun loadCategories(): Map<String, List<Triple<String, String, Int>>> {
 
 
 fun loadCategory(line: String): Triple<String, String, Int> {
-    var payment = defaultPayment
+    var payment = DEBIT_CARD_PAYMENT
     return if (line.indexOf('[') < 0) {
         Triple(line, line, payment)
     } else {
@@ -76,7 +86,7 @@ fun loadCategory(line: String): Triple<String, String, Int> {
 fun transformCsv(tx: Transaction) = "${tx.opDate};${tx.payment};;;${tx.description};${tx.amount};${tx.category};"
 
 
-class Transaction(fields: List<String>, categories: Map<String, List<Triple<String, String, Int>>>) {
+class Transaction(fields: List<String>, categories: Map<String, List<Triple<String, String, Int>>>, defaultPayment: Int) {
     val account: String = fields[0]
     val currency = fields[1]
     val date = LocalDate.parse(fields[2], DateTimeFormatter.BASIC_ISO_DATE)
@@ -100,7 +110,6 @@ class Transaction(fields: List<String>, categories: Map<String, List<Triple<Stri
             category = "Altro"
             description = "Pagamento carta di credito: €" + amount.toString().substring(1)
             amount = 0f
-
         } else if (fields[7].contains("Land: ??")) { // POS from abroad
             category = "Viaggi"
             description = "Grecia: " + fields[7].substring(33)
