@@ -7,12 +7,18 @@ import org.openqa.selenium.firefox.FirefoxProfile
 import org.openqa.selenium.remote.RemoteWebDriver
 import java.io.File
 import java.lang.Thread.sleep
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
 
 class DataRetriever {
 
     private val properties: Map<String, String>
     private val driver: FirefoxDriver
+
+    private val websiteDateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy")!!
+    private val tabFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")!!
 
     private val RESOURCE_DIRECTORY = "src/main/resources/"
     private val DOWNLOAD_DIRECTORY_KEY = "downloadDirectory"
@@ -24,10 +30,9 @@ class DataRetriever {
     private val CARD_NUMBER_KEY = "cardNumber"
     private val ACCOUNT_NUMBER_KEY = "accountNumber"
 
-    private val PAGE_ELEMENTS_SEARCH_TIMEOUT = 15000
+    private val PAGE_ELEMENTS_SEARCH_TIMEOUT = 30 * 1000
 
     init {
-
         properties = File(RESOURCE_DIRECTORY + "importer.properties")
                 .readLines()
                 .filter { it.length > 0 && !it.trimStart().startsWith("#") }
@@ -53,23 +58,47 @@ class DataRetriever {
 
     fun getLastCreditCardTransactions(): String {
 
-        val cardLoginFormUrl = "https://www.icscards.nl/abnamro/login/login"
+       val cardLoginFormUrl = "https://www.icscards.nl/abnamro/login/login"
         driver.get(cardLoginFormUrl)
 
         // waits for the page to be loaded
         waitForElement("//input[@id='username']", driver)
 
+        // login credentials
         val username = driver.findElementByXPath("//input[@id='username']")
         username.sendKeys(properties[CC_USERNAME_KEY])
-
         val password = driver.findElementByXPath("//input[@id='password']")
         password.sendKeys(properties[CC_PASSWORD_KEY])
 
+        // login
         driver.findElementByXPath("//button-promise-loading[@type='submit']").click()
 
-        return ""
-    }
+        waitForElement("//div[contains(.,'Huidige periode')]", driver)
 
+        val sb = StringBuilder()
+
+        // retrieves the entries
+        val dates = driver.findElementsByXPath("//div[@class='i-no-line-height ng-binding']")
+        val amounts = driver.findElementsByXPath("//span[@class='i-padding-left-10px i-float-right ng-binding']")
+        val descriptions = driver.findElementsByXPath("//div[@class='b-transaction-header__description ng-binding ng-scope']")
+        for ((index, value) in dates.withIndex()) {
+            var day = value.text.substring(0..value.text.indexOf(" ")-1)
+            if (day.length == 1) {
+               day = "0" + day
+            }
+            var month = value.text.substring(value.text.indexOf(" ") + 1).dropLast(1).capitalize()
+            val date = LocalDate.parse(day + " " + month + " " + LocalDateTime.now().year, websiteDateFormatter)
+            var amount = amounts[index].text.substring( amounts[index].text.indexOf(" ")+1)
+            amount = amount.replace(".", "")
+            amount = amount.replace(",", ".")
+            sb.append(listOf<String>("", "", date.format(tabFormatter), "0", "0", date.format(tabFormatter), amount, descriptions[index].text.padStart(33, ' ')).joinToString("\t")).append("\n")
+        }
+
+        driver.close()
+
+        println(sb.toString())
+        return sb.toString()
+    }
 
     fun getLastBankTransactions(): String {
 
@@ -120,7 +149,7 @@ class DataRetriever {
 
         var element: WebElement? = null
         do {
-            sleep(750)
+            sleep(500)
             element = try {
                 driver.findElementByXPath(path)
             } catch (ex: Exception) {

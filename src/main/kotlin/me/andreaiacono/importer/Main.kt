@@ -15,8 +15,8 @@ fun main(args: Array<String>) {
 
     val dataRetriever = DataRetriever()
     // writes the last transactions downloaded from the bank on disk
-    File(INPUT_FILE).writeText(dataRetriever.getLastBankTransactions())
-//    File(INPUT_FILE).writeText(getLastCreditCardTransactions())
+//    File(INPUT_FILE).writeText(dataRetriever.getLastBankTransactions())
+    File(INPUT_FILE).writeText(dataRetriever.getLastCreditCardTransactions())
 
     val categories = loadCategories()
 
