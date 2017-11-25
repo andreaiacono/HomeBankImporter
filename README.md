@@ -1,1 +1,1 @@
-An QIF format importer, written for HomeBank.
+An importer for HomeBank using ABN Amro bank account / credit card.
