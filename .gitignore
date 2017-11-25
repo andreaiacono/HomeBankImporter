@@ -5,3 +5,5 @@ out
 build
 src/main/resources/importer.properties
 src/main/resources/firefox_profile
+src/main/resources/*.tab
+src/main/resources/*.csv
