@@ -105,6 +105,27 @@ class DataRetriever {
     fun getLastBankTransactions(): String {
 
         val dataFileExtension = "TAB"
+
+         downloadBankTransactions()
+
+        // loads downloaded file from filesystem (the last one with the specified extension)
+        val dataFile = File(properties[DOWNLOAD_DIRECTORY_KEY])
+                .listFiles()
+                .filter { it.absolutePath.endsWith(dataFileExtension) }
+                .sortedByDescending { it.lastModified() }
+                .firstOrNull() ?: throw Exception("No data file [*.$dataFileExtension] found in [${properties[DOWNLOAD_DIRECTORY_KEY]}")
+
+        // returns the downloaded file
+        val content = dataFile
+                .readLines()
+                .joinToString("\n")
+
+        println("BANK:\n$content")
+        return content
+    }
+
+    private fun downloadBankTransactions(): Unit {
+
         val bankLoginFormUrl = "https://www.abnamro.nl/portalserver/en/personal/index.html?l"
         driver.get(bankLoginFormUrl)
 
@@ -132,21 +153,6 @@ class DataRetriever {
         // logouts from the site
         sleep(2000)
         driver.findElementByLinkText("Log off").click()
-
-        // loads downloaded file from filesystem (the last one with the specified extension)
-        val dataFile = File(properties[DOWNLOAD_DIRECTORY_KEY])
-                .listFiles()
-                .filter { it.absolutePath.endsWith(dataFileExtension) }
-                .sortedBy { it.lastModified() }
-                .firstOrNull() ?: throw Exception("No data file [*.$dataFileExtension] found in [${properties[DOWNLOAD_DIRECTORY_KEY]}")
-
-        // returns the downloaded file
-        val content = dataFile
-                .readLines()
-                .joinToString("\n")
-
-        println("BANK:\n$content")
-        return content
     }
 
     fun waitForElement(path: String, driver: RemoteWebDriver): WebElement {
