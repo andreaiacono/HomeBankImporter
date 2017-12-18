@@ -4,8 +4,8 @@ Amsterdam
 	Casa(AMS): ZEILSTRA[Affitto Casa Lepelstraat 1]; HEMA[Hema]; Blokker[Blokker]; Gamma[Gamma]; WATERNET[Bolletta acqua - Waternet]; Kruidvat; EnergieFlex[Gas/Elettricità]
 	Cibo(AMS): Albert Heijn[Spesa - Albert Heijn]; AH to go[Spesa - Albert Heijn]; AH togo[Spesa - Albert Heijn]; Spar van Kempen[Spesa - Spar]; AH Station[Spesina - Albert Heijn]; Ekoplaza[Spesa - Ekoplaza]; MYCHEF; HMSHOST AMSTERDAM SCHI; Vermaat FD Amsterdam; SHOP 2441/ SBF L4 SCHIPH[Spuntino - Schiphol]; Marqt[Spesa - Marqt]; Broodzaak[Panetteria]; ODIN[Spesa - Odin]
 	Servizi(AMS): Besured[Assicurazione sanitaria|4]; EasyPay S[Costo PinCard ABN Amro|4]; MAANDPREMIE[Assicurazione danni a terzi|4]; Gemeente Amsterdam[Comune di Amsterdam|4]; Hoogheemraadschap Amstel[Depurazione Acqua|4]
-	Trasporti(AMS): NS-[Treno]; GVB [Metro/Bus];Malpensa; NS Schiphol[Treno - Schiphol]; NS-Amsterdam[Treno]; NS-A'dam[Treno]; MILANO NORD CADORNA[Malpensa Express]; NS-Schiphol[Treno]
-    Voli(AMS): Easyjet
+	Trasporti(AMS): NS-[Treno]; GVB [Metro/Bus];Malpensa [Malpensa Express]; NS Schiphol[Treno - Schiphol]; NS-Amsterdam[Treno]; NS-A'dam[Treno]; MILANO NORD CADORNA[Malpensa Express]; NS-Schiphol[Treno]
+    Voli(AMS): Easyjet [Volo Easyjet]; Alitalia [Volo Alitalia]
 Bianca
 Casa
 	Arredamento
