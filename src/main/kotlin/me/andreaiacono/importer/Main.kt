@@ -1,6 +1,7 @@
 package me.andreaiacono.importer
 
 import java.io.File
+import java.lang.System.exit
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -13,32 +14,38 @@ val CREDIT_CARD_PAYMENT = 1
 
 fun main(args: Array<String>) {
 
-    val stringBuilder = StringBuilder()
-    val dataRetriever = DataRetriever()
     val categories = loadCategories()
 
+    if (args.size == 1) {
+        File(OUTPUT_FILE).writeText(transformBankData(File(args[0]).readText(Charsets.UTF_8), categories))
+        exit(0)
+    }
+
+    val stringBuilder = StringBuilder()
+    val dataRetriever = DataRetriever()
+
     // retrieves the data from the bank account
-    val bankAccountData = dataRetriever.getLastBankTransactions()
-    stringBuilder.append(
-            bankAccountData
-                    .split("\n")
-                    .map { transformCsv(Transaction(it.split("\t"), categories, DEBIT_CARD_PAYMENT)) }
-                    .joinToString("\n")
-    )
+    stringBuilder.append(transformBankData(dataRetriever.getLastBankTransactions(), categories))
 
     // retrieves the data from the credit card
-    val creditCardData = dataRetriever.getLastCreditCardTransactions()
-    stringBuilder.append(
-            creditCardData
-                    .split("\n")
-                    .map { transformCsv(Transaction(it.split("\t"), categories, CREDIT_CARD_PAYMENT)) }
-                    .joinToString("\n")
-    )
+    stringBuilder.append(transformCreditCardData(dataRetriever.getLastCreditCardTransactions(), categories))
 
     // writes on disk all the last transactions
     File(OUTPUT_FILE).writeText(stringBuilder.toString())
 }
 
+
+fun transformBankData(bankAccountData: String, categories: Map<String, List<Triple<String, String, Int>>>) = bankAccountData
+        .split("\n")
+        .filter { it != "" }
+        .map { transformCsv(Transaction(it.split("\t"), categories, DEBIT_CARD_PAYMENT)) }
+        .joinToString("\n")
+
+fun transformCreditCardData(creditCardData: String, categories: Map<String, List<Triple<String, String, Int>>>) = creditCardData
+        .split("\n")
+        .filter { it != "" }
+        .map { transformCsv(Transaction(it.split("\t"), categories, CREDIT_CARD_PAYMENT)) }
+        .joinToString("\n")
 
 fun loadCategories(): Map<String, List<Triple<String, String, Int>>> {
     val lines = File("src/main/resources/categories.txt").readLines()
@@ -106,7 +113,7 @@ class Transaction(fields: List<String>, categories: Map<String, List<Triple<Stri
             category = "Prelievo"
             description = "Prelievo " + amount.toString().substring(1) + "€"
             amount = 0f
-        } else if (fields[7].contains("INT CARD SERVICES")){  // Credit card payment (not counted as an operation)
+        } else if (fields[7].contains("INT CARD SERVICES")) {  // Credit card payment (not counted as an operation)
             category = "Altro"
             description = "Pagamento carta di credito: €" + amount.toString().substring(1)
             amount = 0f

@@ -82,16 +82,18 @@ class DataRetriever {
         val amounts = driver.findElementsByXPath("//span[@class='i-padding-left-10px i-float-right ng-binding']")
         val descriptions = driver.findElementsByXPath("//div[@class='b-transaction-header__description ng-binding ng-scope']")
         for ((index, value) in dates.withIndex()) {
-            var day = value.text.substring(0..value.text.indexOf(" ")-1)
-            if (day.length == 1) {
-               day = "0" + day
+            if (value.text != null && value.text != "") {
+                var day = value.text.substring(0..value.text.indexOf(" ") - 1)
+                if (day.length == 1) {
+                    day = "0" + day
+                }
+                var month = value.text.substring(value.text.indexOf(" ") + 1).dropLast(1).capitalize()
+                val date = LocalDate.parse(day + " " + month + " " + LocalDateTime.now().year, websiteDateFormatter).format(tabFormatter)
+                var amount = "-" + amounts[index].text.substring(amounts[index].text.indexOf(" ") + 1)
+                amount = amount.replace(".", "")
+                amount = amount.replace(",", ".")
+                sb.append(listOf<String>(date, "EUR", date, "0", "0", date, amount, "-".repeat(33) + descriptions[index].text).joinToString("\t", "")).append("\n")
             }
-            var month = value.text.substring(value.text.indexOf(" ") + 1).dropLast(1).capitalize()
-            val date = LocalDate.parse(day + " " + month + " " + LocalDateTime.now().year, websiteDateFormatter).format(tabFormatter)
-            var amount = "-" + amounts[index].text.substring( amounts[index].text.indexOf(" ")+1)
-            amount = amount.replace(".", "")
-            amount = amount.replace(",", ".")
-            sb.append(listOf<String>(date, "EUR", date, "0", "0", date, amount, "-".repeat(33) + descriptions[index].text).joinToString("\t", "")).append("\n")
         }
         driver.findElementByXPath("//button[@class='page-header__menu-personal-btn js-mobilemenubtn-personal']").click()
         driver.findElementByLinkText("Uitloggen").click()
