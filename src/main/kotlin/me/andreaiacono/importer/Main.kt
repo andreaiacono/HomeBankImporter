@@ -1,23 +1,31 @@
 package me.andreaiacono.importer
 
+import com.opencsv.CSVReader
 import java.io.File
+import java.io.FileReader
 import java.lang.System.exit
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+
 
 const val OUTPUT_FILE = "src/main/resources/output_data.csv"
 
-val dateFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")!!
 val DEBIT_CARD_PAYMENT = 6
 val CREDIT_CARD_PAYMENT = 1
+val BANK_TRANSACTION = 4
 
 
 fun main(args: Array<String>) {
 
     val categories = loadCategories()
 
-    if (args.size == 1) {
-        File(OUTPUT_FILE).writeText(transformBankData(File(args[0]).readText(Charsets.UTF_8), categories))
+    if (false) {
+        val csvFilename = "/home/andrea/Dropbox/Documents/banca/movimenti_2017.csv"
+        File(OUTPUT_FILE).writeText(transformCsvData(csvFilename, categories))
+        exit(0)
+    }
+
+    if (false) {
+        val downloadedFile = "/home/andrea/Downloads/TXT180120125721.TAB"
+        File(OUTPUT_FILE).writeText(transformBankData(File(downloadedFile).readText(Charsets.UTF_8), categories))
         exit(0)
     }
 
@@ -25,7 +33,7 @@ fun main(args: Array<String>) {
     val dataRetriever = DataRetriever()
 
     // retrieves the data from the bank account
-    stringBuilder.append(transformBankData(dataRetriever.getLastBankTransactions(), categories))
+    stringBuilder.append(transformBankData(dataRetriever.getLastBankTransactions(), categories)).append("\n")
 
     // retrieves the data from the credit card
     stringBuilder.append(transformCreditCardData(dataRetriever.getLastCreditCardTransactions(), categories))
@@ -38,13 +46,19 @@ fun main(args: Array<String>) {
 fun transformBankData(bankAccountData: String, categories: Map<String, List<Triple<String, String, Int>>>) = bankAccountData
         .split("\n")
         .filter { it != "" }
-        .map { transformCsv(Transaction(it.split("\t"), categories, DEBIT_CARD_PAYMENT)) }
+        .map { toCsv(fromAbnCsv(it.split("\t"), categories, DEBIT_CARD_PAYMENT)) }
         .joinToString("\n")
 
 fun transformCreditCardData(creditCardData: String, categories: Map<String, List<Triple<String, String, Int>>>) = creditCardData
         .split("\n")
         .filter { it != "" }
-        .map { transformCsv(Transaction(it.split("\t"), categories, CREDIT_CARD_PAYMENT)) }
+        .map { toCsv(fromAbnCsv(it.split("\t"), categories, CREDIT_CARD_PAYMENT)) }
+        .joinToString("\n")
+
+fun transformCsvData(csvFilename: String, categories: Map<String, List<Triple<String, String, Int>>>) = CSVReader(FileReader(csvFilename), ';')
+        .readAll()
+        .drop(1)
+        .map { toCsv(fromBancaEticaCsv(it.toList(), categories, BANK_TRANSACTION)) }
         .joinToString("\n")
 
 fun loadCategories(): Map<String, List<Triple<String, String, Int>>> {
@@ -90,49 +104,3 @@ fun loadCategory(line: String): Triple<String, String, Int> {
 }
 
 
-fun transformCsv(tx: Transaction) = "${tx.opDate};${tx.payment};;;${tx.description};${tx.amount};${tx.category};"
-
-
-class Transaction(fields: List<String>, categories: Map<String, List<Triple<String, String, Int>>>, defaultPayment: Int) {
-    val account: String = fields[0]
-    val currency = fields[1]
-    val date = LocalDate.parse(fields[2], DateTimeFormatter.BASIC_ISO_DATE)
-    val startBalance = fields[3].replace(',', '.').toFloat()
-    val endBalance = fields[4].replace(',', '.').toFloat()
-    val opDate = LocalDate.parse(fields[5], DateTimeFormatter.BASIC_ISO_DATE).format(dateFormatter)
-    var amount = fields[6].replace(',', '.').toFloat()
-    var description = fields[7].substring(33)
-    var category: String
-    var payment = defaultPayment
-
-    init {
-        category = "Altro"
-        if (amount > 0) {
-            category = "Entrate"
-        } else if (fields[7].startsWith("GEA")) {  // POS withdrawal
-            category = "Prelievo"
-            description = "Prelievo " + amount.toString().substring(1) + "€"
-            amount = 0f
-        } else if (fields[7].contains("INT CARD SERVICES")) {  // Credit card payment (not counted as an operation)
-            category = "Altro"
-            description = "Pagamento carta di credito: €" + amount.toString().substring(1)
-            amount = 0f
-        } else if (fields[7].contains("Land: ??")) { // POS from abroad
-            category = "Viaggi"
-            description = "Grecia: " + fields[7].substring(33)
-        }
-        for (cat in categories.keys) {
-            for (regexp in categories[cat].orEmpty()) {
-                if (description.toLowerCase().contains(regexp.first.toLowerCase())) {
-                    category = cat
-                    description = regexp.second
-                    payment = regexp.third
-                }
-            }
-        }
-
-        if (category == "Altro") {
-            println("$opDate ($date) [$amount] Category not found for [$description]")
-        }
-    }
-}

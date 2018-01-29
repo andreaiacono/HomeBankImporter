@@ -1,28 +1,29 @@
 Abbigliamento
-Altro
+Altro: Medici senza fr[Donazione MSF]; F24Rem[F24]
 Amsterdam
-	Casa(AMS): ZEILSTRA[Affitto Casa Lepelstraat 1]; HEMA[Hema]; Blokker[Blokker]; Gamma[Gamma]; WATERNET[Bolletta acqua - Waternet]; Kruidvat; EnergieFlex[Gas/Elettricità]
-	Cibo(AMS): Albert Heijn[Spesa - Albert Heijn]; AH to go[Spesa - Albert Heijn]; AH togo[Spesa - Albert Heijn]; Spar van Kempen[Spesa - Spar]; AH Station[Spesina - Albert Heijn]; Ekoplaza[Spesa - Ekoplaza]; MYCHEF; HMSHOST AMSTERDAM SCHI; Vermaat FD Amsterdam; SHOP 2441/ SBF L4 SCHIPH[Spuntino - Schiphol]; Marqt[Spesa - Marqt]; Broodzaak[Panetteria]; ODIN[Spesa - Odin]
-	Servizi(AMS): Besured[Assicurazione sanitaria|4]; EasyPay S[Costo PinCard ABN Amro|4]; MAANDPREMIE[Assicurazione danni a terzi|4]; Gemeente Amsterdam[Comune di Amsterdam|4]; Hoogheemraadschap Amstel[Depurazione Acqua|4]
-	Trasporti(AMS): NS-[Treno]; GVB [Metro/Bus];Malpensa [Malpensa Express]; NS Schiphol[Treno - Schiphol]; NS-Amsterdam[Treno]; NS-A'dam[Treno]; MILANO NORD CADORNA[Malpensa Express]; NS-Schiphol[Treno]
-    Voli(AMS): Easyjet [Volo Easyjet]; Alitalia [Volo Alitalia]
-Bianca
+	Casa(AMS): ZEILSTRA[Affitto Casa Lepelstraat 1]; HEMA[Hema]; Blokker[Blokker]; Gamma[Gamma]; WATERNET[Bolletta acqua - Waternet]; Kruidvat; Stichting[Connessione ADSL - Amsterdam]; T-Mobile Thuis[Connessione ADSL - Amsterdam]; EnergieFlex[Gas/Elettricità]
+	Cibo(AMS): Albert Heijn[Spesa - Albert Heijn]; AH to go[Spesa - Albert Heijn]; AH togo[Spesa - Albert Heijn]; Spar van Kempen[Spesa - Spar]; AH Station[Spesina - Albert Heijn]; Ekoplaza[Spesa - Ekoplaza]; MYCHEF; HMSHOST AMSTERDAM SCHI[Spuntino - Schiphol]; Vermaat FD Amsterdam; SHOP 2441/ SBF L4 SCHIPH[Spuntino - Schiphol]; Marqt[Spesa - Marqt]; Broodzaak[Panetteria]; ODIN[Spesa - Odin]
+	Servizi(AMS): Besured[Assicurazione sanitaria|4]; MAANDPREMIE[Assicurazione danni a terzi|4]; Gemeente Amsterdam[Comune di Amsterdam|4]; Hoogheemraadschap Amstel[Depurazione Acqua|4]
+	Trasporti(AMS): NS-[Treno]; GVB [Metro/Bus/Tram];Malpensa [Malpensa Express]; NS Schiphol[Treno - Schiphol]; NS-Amsterdam[Treno]; NS-A'dam[Treno]; MILANO NORD CADORNA[Malpensa Express]; NS-Schiphol[Treno]
+    Voli(AMS): Easyjet[Volo Easyjet]; Alitalia[Volo Alitalia]; Vueling[Volo Vueling]
+Banca: IMPOSTA DI BOLLO[Spese Conto Corrente|4]; CANONE CARTA DEBITO[Costo Bancomat|4]; Polizza 0025775[Spese Conto Corrente|4]; CANONE/COMMISSIONI VIRTUAL BANKING[Canone Home Banking|4]; EasyPay S[Costo PinCard ABN Amro|4]; COMMIS/SPESE[Costo bonifico|4]; CANONE M.I.T.O.[Canone Home Banking]
+Bianca: JUNIOR CLUB[Campo Estivo Pratoalto]; FUNLAB[Pagamento Funlab|4]; British School[Retta British School]
 Casa
 	Arredamento
 	Giardinaggio
 	Manutenzione: TOMMY SERVICE
 	Mutuo
-	Spese Condominiali
-	Utenze
+	Spese Condominiali: CONDOMINIO VIA DE AMICIS[Spese Condominiali|4]
+	Utenze: e' nostra[Elettricità - E' nostra|4]; Enel energia[Elettricità - Enel|4]
 	Via E. de Amicis
 	Via Solari 15
 Computer
 	Hardware
-	Internet
+	Internet: Fastweb spa[Canone Fastweb|4]
 	Software
 Cultura
 	Fumetti: REM S R L[Supergulp]
-	Libri
+	Libri: La cerchia[Libraccio]
 	Mostre: Banksy
 	Musei: Museum; Museo; Acquario; Stg. Projecten NKerk
 	Quotidiani: Repubblica; corriere
@@ -42,13 +43,13 @@ Intrattenimento
 	DVD
 	Uscite: MILLINO; Cafe; waterkant[Birrette - Waterkant]
 Mangiare
-	Cibo: BAKERY; VENCHI[Gelato - Venchi]
+	Cibo: BAKERY; VENCHI[Gelato - Venchi]; Pizzeria naturale[Pizza da asporto - Pizzeria Naturale]
 	Ristoranti: Bazar; RIST.ACERO; FAMILY STEFANOS; L'ARAGOSTA DI ARCAINI; Maxi Steaks; PIZZA BIG
 	Spesa: PAM PANORAMA[Spesa - PAM]; SUPERMERCATO; BIO C BON[Spesa - Bio'c'bon]; PUNTO SMA[Spesa - Punto SMA]; Jumbo[Spesa - Jumbo]
 Musica
 	CD
 	Chitarra
-Partita IVA
+Partita IVA: STUDIO ADELMO MENOZZI[Commercialista|4]
 Regali
 Salute: Farmacia
 	Andrologo
@@ -63,10 +64,10 @@ Sport: DECATHLON[Decathlon]
 	Piscina
 	Taekwondo
 Telefono
-	Cellulare
+	Cellulare: Wind Tre[Canone Cellulare Tre/Wind|4]
 	Fisso
-Trasporti: Taxi
-	ATM: AZIENDA TRASPORTI MI
+Trasporti: Taxi; UBER[Uber]
+	ATM: AZIENDA TRASPORTI MI[Biglietto ATM]
 	Benzina
 	Bici
 	CBR
@@ -75,7 +76,7 @@ Trasporti: Taxi
 	Noleggio Auto
 	NSR
 	Treno
-	Viaggi
+	Viaggi: FAST PAY[Casello - FastPay|4]
 	VTR
 Viaggi
 Vizi
